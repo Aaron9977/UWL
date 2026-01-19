@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>UWL ESP32-C6 I/O</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="title">UWL I/O 面板</div>
+      <div class="topbar__right">
+        <div id="conn" class="pill pill--down">WS: 连接中…</div>
+        <div id="bleConn" class="pill pill--down">BLE: 未连接</div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <div class="card__title">设备状态</div>
+        <div class="row">
+          <div id="wifiSta" class="pill">Wi‑Fi STA: —</div>
+          <div id="wsClients" class="pill">WS 客户端: —</div>
+          <div id="bleStat" class="pill">BLE: —</div>
+        </div>
+        <div class="hint">状态来自 <code>/api/status</code>（每 1s 刷新一次）。</div>
+      </section>
+
+      <section class="card">
+        <div class="card__title">排针视图（ESP32‑C6 DevKitC‑1）</div>
+        <div class="hint">
+          排针定义参考官方用户指南（J1/J3）：<code>ESP32‑C6‑DevKitC‑1</code> 的 GPIO8 为板载 RGB LED，GPIO12/13 为 USB D‑/D+。
+        </div>
+        <div class="grid2">
+          <div>
+            <div class="subTitle">J1</div>
+            <div id="hdrJ1" class="pinTable"></div>
+          </div>
+          <div>
+            <div class="subTitle">J3</div>
+            <div id="hdrJ3" class="pinTable"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__title">已启用 GPIO（固件白名单）</div>
+        <div id="gpioList" class="list"></div>
+        <div class="hint">
+          说明：当前固件只会初始化 menuconfig 里配置的 GPIO（OUT1..OUT4 / IN1）。网页里的“别名/用途”是手机本地保存，不会改固件。
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__title">BLE（Web Bluetooth）</div>
+        <div class="row">
+          <button id="btnBleConnect" class="btn">连接 BLE</button>
+          <button id="btnBleDisconnect" class="btn btn--ghost" disabled>断开 BLE</button>
+          <button id="btnBleReadState" class="btn btn--ghost" disabled>从 BLE 读取全量状态</button>
+        </div>
+        <div class="hint">
+          注意：Web Bluetooth 需要“安全上下文”（HTTPS/localhost）。SoftAP 的 <code>http://192.168.4.1</code> 默认不可用。
+          可用做法：Android Chrome 在 <code>chrome://flags</code> 里把该源当作安全源（开发用途）。
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__title">操作</div>
+        <div class="row">
+          <button id="btnRefresh" class="btn">请求全量状态</button>
+          <button id="btnCfgExport" class="btn btn--ghost">导出配置</button>
+          <button id="btnCfgImport" class="btn btn--ghost">导入配置</button>
+        </div>
+        <div class="hint">
+          默认连接：<code>ws://192.168.4.1/ws</code>（SoftAP 模式下的默认网关）
+        </div>
+      </section>
+    </main>
+
+    <dialog id="pinDlg" class="dlg">
+      <form method="dialog" class="dlg__panel">
+        <div class="dlg__title">配置 <span id="dlgPinTitle"></span></div>
+        <label class="field">
+          <div class="field__label">名称（别名）</div>
+          <input id="dlgLabel" class="input" placeholder="例如：继电器1 / 门磁 / 风扇" />
+        </label>
+        <label class="field">
+          <div class="field__label">用途</div>
+          <select id="dlgRole" class="input">
+            <option value="">未设置</option>
+            <option value="relay">继电器/开关</option>
+            <option value="led">LED/指示灯</option>
+            <option value="button">按键/门磁</option>
+            <option value="sensor">传感器输入</option>
+            <option value="other">其它</option>
+          </select>
+        </label>
+        <div class="row" style="justify-content:flex-end;">
+          <button class="btn btn--ghost" value="cancel">取消</button>
+          <button id="dlgSave" class="btn" value="ok">保存</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

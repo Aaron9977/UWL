@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>UWL 配置</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="page page--config">
+    <header class="topbar">
+      <div class="title">UWL 配置</div>
+      <nav class="topbar__right">
+        <a class="tab" href="/control">控制</a>
+        <a class="tab tab--active" href="/config">配置</a>
+        <div id="conn" class="pill pill--down">WS: 连接中…</div>
+      </nav>
+    </header>
+
+    <main class="container container--tight">
+      <section class="card card--tight">
+        <div class="row row--tight">
+          <button id="btnEnableFwPins" class="btn btn--mini">仅启用固件已配置</button>
+          <button id="btnCfgExport" class="btn btn--mini btn--ghost">导出</button>
+          <button id="btnCfgImport" class="btn btn--mini btn--ghost">导入</button>
+        </div>
+      </section>
+
+      <section class="card card--tight">
+        <div class="card__title">排针（J1 / J3）</div>
+        <div class="grid2 grid2--tight">
+          <div>
+            <div class="subTitle">J1</div>
+            <div id="hdrJ1" class="pinTable pinTable--tight"></div>
+          </div>
+          <div>
+            <div class="subTitle">J3</div>
+            <div id="hdrJ3" class="pinTable pinTable--tight"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="pinDlg" class="dlg">
+      <form method="dialog" class="dlg__panel">
+        <div class="dlg__title">配置 <span id="dlgPinTitle"></span></div>
+        <label class="field">
+          <div class="field__label">名称</div>
+          <input id="dlgLabel" class="input" placeholder="例如：继电器1" />
+        </label>
+        <label class="field">
+          <div class="field__label">用途</div>
+          <select id="dlgRole" class="input">
+            <option value="">未设置</option>
+            <option value="relay">继电器/开关</option>
+            <option value="led">LED/指示灯</option>
+            <option value="button">按键/门磁</option>
+            <option value="sensor">传感器输入</option>
+            <option value="other">其它</option>
+          </select>
+        </label>
+        <div class="row row--tight" style="justify-content:flex-end;">
+          <button class="btn btn--mini btn--ghost" value="cancel">取消</button>
+          <button id="dlgSave" class="btn btn--mini" value="ok">保存</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>UWL 控制</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="page page--control">
+    <header class="topbar">
+      <div class="title">UWL 控制</div>
+      <nav class="topbar__right">
+        <a class="tab tab--active" href="/control">控制</a>
+        <a class="tab" href="/config">配置</a>
+        <div id="conn" class="pill pill--down">WS: 连接中…</div>
+      </nav>
+    </header>
+
+    <main class="container container--tight">
+      <section class="card card--tight">
+        <div class="row row--tight">
+          <div id="wifiSta" class="pill">STA: —</div>
+          <div id="wsClients" class="pill">WS: —</div>
+          <div id="bleStat" class="pill">BLE: —</div>
+          <button id="btnRefresh" class="btn btn--mini">刷新</button>
+        </div>
+      </section>
+
+      <section class="card card--tight">
+        <div class="card__title">已启用 IO</div>
+        <div id="gpioList" class="list list--tight"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
+

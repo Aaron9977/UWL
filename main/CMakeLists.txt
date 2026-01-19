@@ -1,0 +1,30 @@
+idf_component_register(
+    SRCS
+        "main.c"
+        "uwl_io_state.c"
+        "uwl_gpio.c"
+        "uwl_wifi_softap.c"
+        "uwl_http.c"
+        "uwl_ws.c"
+        "uwl_usb_console.c"
+        "uwl_ble_gatt.c"
+        "uwl_status_led.c"
+    INCLUDE_DIRS "."
+    REQUIRES
+        bt
+        console
+        driver
+        esp_driver_rmt
+        esp_event
+        esp_http_server
+        esp_netif
+        esp_wifi
+        json
+        nvs_flash
+    EMBED_FILES
+        "web/index.html"
+        "web/control.html"
+        "web/config.html"
+        "web/app.js"
+        "web/style.css"
+)

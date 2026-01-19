@@ -1,0 +1,86 @@
+menu "UWL"
+
+config UWL_WIFI_AP_SSID
+    string "SoftAP SSID"
+    default "UWL-ESP32C6"
+
+config UWL_WIFI_AP_PASS
+    string "SoftAP password (empty for open network; WPA2 requires >= 8 chars)"
+    default "uwl123456"
+
+config UWL_WIFI_AP_CHANNEL
+    int "SoftAP channel"
+    range 1 13
+    default 6
+
+config UWL_WIFI_AP_MAX_CONN
+    int "SoftAP max connections"
+    range 1 10
+    default 4
+
+config UWL_GPIO_OUT1
+    int "Output GPIO #1"
+    range 0 30
+    default 18
+
+config UWL_GPIO_OUT2
+    int "Output GPIO #2"
+    range 0 30
+    default 19
+
+config UWL_GPIO_OUT3
+    int "Output GPIO #3"
+    range 0 30
+    default 20
+
+config UWL_GPIO_OUT4
+    int "Output GPIO #4"
+    range 0 30
+    default 21
+
+config UWL_GPIO_IN1
+    int "Input GPIO #1"
+    range 0 30
+    default 10
+
+config UWL_ENABLE_HEADER_PRESET
+    bool "Expose common DevKitC-1 header GPIOs (safe preset)"
+    default y
+    help
+        When enabled, firmware will expose a safe preset of commonly usable GPIOs
+        from the ESP32-C6 DevKitC-1 headers (J1/J3) to the Web UI / WS / BLE.
+        Strap pins, USB D-/D+, and the onboard status LED GPIO are excluded.
+
+config UWL_ENABLE_USB_CONSOLE
+    bool "Enable USB Serial/JTAG console (gpio list/get/set)"
+    depends on ESP_CONSOLE_USB_SERIAL_JTAG
+    default y
+
+config UWL_ENABLE_BLE
+    bool "Enable BLE control channel (NimBLE GATT)"
+    depends on BT_NIMBLE_ENABLED
+    default y
+
+config UWL_ENABLE_HTTPD_WS
+    bool "Enable WebSocket support in esp_http_server"
+    default y
+    select HTTPD_WS_SUPPORT
+
+config UWL_ENABLE_STATUS_LED
+    bool "Enable board status LED (ESP32-C6 DevKitC-1: WS2812 RGB on GPIO8)"
+    default y
+
+config UWL_STATUS_LED_GPIO
+    int "Status LED GPIO (WS2812 data pin)"
+    range 0 30
+    default 8
+    depends on UWL_ENABLE_STATUS_LED
+
+config UWL_STATUS_LED_BRIGHTNESS
+    int "Status LED brightness (0-255)"
+    range 0 255
+    default 64
+    depends on UWL_ENABLE_STATUS_LED
+
+endmenu
+
